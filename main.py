@@ -1,2 +1,2 @@
-if __name__ =='__main__':
-    print('done')
+if __name__ == '__main__':
+    print('done^2')
