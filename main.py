@@ -1,2 +1,2 @@
 if __name__ == '__main__':
-    print('done^33')
+    print('done^66')
