@@ -1,5 +1,13 @@
 import engine_performance
 import math
+import subprocess
+import sys
+
+
+def install(numpy, scipy, matplotlib):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", numpy])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", scipy])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", matplotlib])
 
 
 class Structure:  # structure to make variables easier to categorize
@@ -37,7 +45,7 @@ if __name__ == "__main__":
     # Output Variable Unit Preference #
 
     # Design Parameters #
-    input0.F_o = 400 * conv.lbf2N  # Desired thrust (lbf)
+    input0.F_o = 100000 * conv.lbf2N  # Desired thrust (lbf)
     input0.P_atm = 14.0 * conv.psi2pa  # Ambient pressure (psia)
     input0.L_star = 1.27  # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
     input0.esp_con = 17.1  # Contraction ratio (chamber area/throat area) (experimental)
@@ -82,7 +90,6 @@ if __name__ == "__main__":
     cal.y = cea.C_p / cal.C_v
     print(cal.y, cea.y, cal.R, cea.T_c)
 
-    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat = engine_performance.engine_performance(input0.P_atm, input0.esp_con,
-                                                                                          cea.P_c,
-                                                                                          cea.y, cal.R, cea.T_c)
-    print(cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat)
+    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t = engine_performance.engine_performance(
+        input0.P_atm, input0.esp_con, cea.P_c, cea.y, cal.R, cea.T_c, input0.s_f, input0.s_v, input0.F_o)
+    print(cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t)
