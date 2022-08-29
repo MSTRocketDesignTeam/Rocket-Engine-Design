@@ -3,7 +3,7 @@ import math
 
 
 class Structure:  # structure to make variables easier to categorize
-    def __int__(self, constant):
+    def __int__(self):
         pass
 
 
@@ -63,11 +63,12 @@ if __name__ == "__main__":
     # NASA CEA Outputs #
     cea.MR = 5.25  # Oxidizer/Fuel Ratio
     cea.P_c = 68.947 * conv.bar2pa  # Chamber pressure
-    cea.T_c = 3229.8  # Chamber temperature (K)
-    cea.rho_c = 6.7710  # Chamber gas density (kg/m^3)
-    cea.dlV_dlPt = -1.01536  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
-    cea.dlV_dlTp = 1.3145  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
-    cea.C_p = 3.7762  # Specific heat at constant pressure (kJ/kg*k)
+    cea.T_c = 3466.10  # Chamber temperature (K)
+    cea.rho_c = 6.1464  # Chamber gas density (kg/m^3)
+    cea.dlV_dlPt = -1.02297  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
+    cea.dlV_dlTp = 1.4294  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
+    cea.C_p = 4.3693  # Specific heat at constant pressure (kJ/kg*k)
+    cea.y = 1.1473  # Ratio of specific heats
 
     # Engine Performance Calculations #
     # ---------------------#
@@ -75,10 +76,13 @@ if __name__ == "__main__":
     cal.R = cea.P_c / (cea.T_c * cea.rho_c)  # Calculates universal gas constant
 
     # cal.C_v = cea.C_p + cea.T_c * (pow(cea.dlV_dlTp, 2) / cea.dlV_dlPt)
-    cal.C_v = cea.C_p + cal.R / 1000 * (pow(cea.dlV_dlTp, 2) / cea.dlV_dlPt)  # Same reference as lines 65-66
+    cal.C_v = cea.C_p + cal.R / 1000 * (pow(cea.dlV_dlTp,  # Same reference as lines 65-66
+                                            2) / cea.dlV_dlPt)  # Likely won't include, inaccurate
 
     cal.y = cea.C_p / cal.C_v
-    print(cal.y, cea.P_c, cea.P_t, input0.P_atm)
+    print(cal.y, cea.y, cal.R, cea.T_c)
 
-    cal.C_f = engine_performance.engine_performance(input0.P_atm, input0.esp_con, cea.P_c, cal.y)
-    print(cal.C_f)
+    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat = engine_performance.engine_performance(input0.P_atm, input0.esp_con,
+                                                                                          cea.P_c,
+                                                                                          cea.y, cal.R, cea.T_c)
+    print(cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat)
