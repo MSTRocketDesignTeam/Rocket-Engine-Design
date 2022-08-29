@@ -54,3 +54,5 @@ def specific_impulse_vac(c_star, c_f_vac, s_v):
 def throat_area(f_o, c_f, p_c):
     a_t = f_o / (c_f * p_c)
     return a_t
+
+#test

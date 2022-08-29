@@ -93,3 +93,4 @@ if __name__ == "__main__":
     cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t = engine_performance.engine_performance(
         input0.P_atm, input0.esp_con, cea.P_c, cea.y, cal.R, cea.T_c, input0.s_f, input0.s_v, input0.F_o)
     print(cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t)
+#test
