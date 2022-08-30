@@ -14,7 +14,10 @@ def engine_performance(p_atm, esp_con, p_c, y, r, c_t, s_f, s_v, f_o):
     isp_sl = specific_impulse_sl(c_star, c_f, s_v)
     isp_vac = specific_impulse_vac(c_star, c_f_vac, s_v)
     a_t = throat_area(f_o, c_f, p_c)
-    return c_f, c_f_vac, c_star, exp_rat, isp_sl, isp_vac, a_t
+    d_t = diameter(a_t)
+    a_c = chamber_area(esp_con, a_t)
+    d_c = diameter(a_c)
+    return c_f, c_f_vac, c_star, exp_rat, isp_sl, isp_vac, a_t, d_t, a_c, d_c
 
 
 def thrust_coefficient(p_atm, p_c, y):
@@ -55,4 +58,12 @@ def throat_area(f_o, c_f, p_c):
     a_t = f_o / (c_f * p_c)
     return a_t
 
-#test
+
+def diameter(a):
+    d = math.sqrt((4 * a) / math.pi)
+    return d
+
+
+def chamber_area(esp_con, a_t):
+    a_c = esp_con * a_t
+    return a_c

@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # Output Variable Unit Preference #
 
     # Design Parameters #
-    input0.F_o = 100000 * conv.lbf2N  # Desired thrust (lbf)
+    input0.F_o = 500 * conv.lbf2N  # Desired thrust (lbf)
     input0.P_atm = 14.0 * conv.psi2pa  # Ambient pressure (psia)
     input0.L_star = 1.27  # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
     input0.esp_con = 17.1  # Contraction ratio (chamber area/throat area) (experimental)
@@ -71,12 +71,12 @@ if __name__ == "__main__":
     # NASA CEA Outputs #
     cea.MR = 5.25  # Oxidizer/Fuel Ratio
     cea.P_c = 68.947 * conv.bar2pa  # Chamber pressure
-    cea.T_c = 3466.10  # Chamber temperature (K)
-    cea.rho_c = 6.1464  # Chamber gas density (kg/m^3)
-    cea.dlV_dlPt = -1.02297  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
-    cea.dlV_dlTp = 1.4294  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
-    cea.C_p = 4.3693  # Specific heat at constant pressure (kJ/kg*k)
-    cea.y = 1.1473  # Ratio of specific heats
+    cea.T_c = 3229.84  # Chamber temperature (K)
+    cea.rho_c = 6.7710  # Chamber gas density (kg/m^3)
+    cea.dlV_dlPt = -1.01536  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
+    cea.dlV_dlTp = 1.3145  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
+    cea.C_p = 3.7762  # Specific heat at constant pressure (kJ/kg*k)
+    cea.y = 1.1480  # Ratio of specific heats
 
     # Engine Performance Calculations #
     # ---------------------#
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     cal.y = cea.C_p / cal.C_v
     print(cal.y, cea.y, cal.R, cea.T_c)
 
-    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t = engine_performance.engine_performance(
+    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t, cal.d_t, cal.a_c, cal.d_c = engine_performance.engine_performance(
         input0.P_atm, input0.esp_con, cea.P_c, cea.y, cal.R, cea.T_c, input0.s_f, input0.s_v, input0.F_o)
-    print(cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t)
+    print(cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t, cal.d_t, cal.a_c, cal.d_c)
 #test
