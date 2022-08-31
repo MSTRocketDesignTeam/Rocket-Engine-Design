@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e44e4a1-7571-4524-b2fd-a570a64ef3d7" name="Changes" comment="Rev 3">
-      <change beforePath="$PROJECT_DIR$/.idea/Engine-Contour.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Engine-Contour.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CEA Output 300 psia" beforeDir="false" afterPath="$PROJECT_DIR$/CEA Output 300 psia" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine_performance.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine_performance.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="1e44e4a1-7571-4524-b2fd-a570a64ef3d7" name="Changes" comment="Rev 6" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661745288994</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Rev 6">
+      <created>1661908228479</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1661908228479</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -138,7 +138,8 @@
     <MESSAGE value="test 3" />
     <MESSAGE value="Rev 2" />
     <MESSAGE value="Rev 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rev 3" />
+    <MESSAGE value="Rev 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rev 6" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
