@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e44e4a1-7571-4524-b2fd-a570a64ef3d7" name="Changes" comment="Rev 6">
-      <change afterPath="$PROJECT_DIR$/engine_contour.py" afterDir="false" />
+    <list default="true" id="1e44e4a1-7571-4524-b2fd-a570a64ef3d7" name="Changes" comment="Rev 5">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine_contour.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine_contour.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine_performance.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine_performance.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -25,13 +25,12 @@
   <component name="Git.Pull.Settings">
     <option name="OPTIONS">
       <set>
-        <option value="REBASE" />
+        <option value="NO_FF" />
       </set>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -48,6 +47,11 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/andre/Documents/GitHub/Engine-Contour/main.py&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;TEXT&quot;
+    ]
   }
 }</component>
   <component name="RunManager">
@@ -58,9 +62,9 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
+      <option name="SDK_HOME" value="D:\PythonWorkSpace\RocketProjects\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
+      <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -117,21 +121,35 @@
       <option name="project" value="LOCAL" />
       <updated>1661745288994</updated>
     </task>
-    <task id="LOCAL-00006" summary="Rev 6">
-      <created>1661908228479</created>
+    <task id="LOCAL-00006" summary="Rev 3">
+      <created>1661753673033</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1661908228479</updated>
+      <updated>1661753673033</updated>
     </task>
-    <task id="LOCAL-00007" summary="Rev 6">
-      <created>1661908576633</created>
+    <task id="LOCAL-00007" summary="Rev 4">
+      <created>1661753844403</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1661908576633</updated>
+      <updated>1661753844403</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Rev 5">
+      <created>1661837147910</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1661837147910</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Rev 5">
+      <created>1661837195150</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1661837195150</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -150,18 +168,8 @@
     <MESSAGE value="test 3" />
     <MESSAGE value="Rev 2" />
     <MESSAGE value="Rev 3" />
-    <MESSAGE value="Rev 6" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rev 6" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/engine_performance.py</url>
-          <line>6</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Rev 4" />
+    <MESSAGE value="Rev 5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rev 5" />
   </component>
 </project>

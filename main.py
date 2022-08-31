@@ -5,9 +5,7 @@ import subprocess
 import sys
 
 
-def install(numpy, scipy, matplotlib):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", numpy])
-    subprocess.check_call([sys.executable, "-m", "pip", "install", scipy])
+def install(matplotlib):
     subprocess.check_call([sys.executable, "-m", "pip", "install", matplotlib])
 
 
@@ -83,19 +81,19 @@ if __name__ == "__main__":
     # Engine Performance Calculations #
     # ---------------------#
 
-    cal.R = cea.P_c / (cea.T_c * cea.rho_c)  # Calculates universal gas constant
+    cal.R = cea.P_c / (cea.T_c * cea.rho_c)  # Calculates gas constant
 
-    # cal.C_v = cea.C_p + cea.T_c * (pow(cea.dlV_dlTp, 2) / cea.dlV_dlPt)
-    cal.C_v = cea.C_p + cal.R / 1000 * (pow(cea.dlV_dlTp,  # Same reference as lines 65-66
-                                            2) / cea.dlV_dlPt)  # Likely won't include, inaccurate
+    # Way to calculate specific heat at const. volume. Useful if gamma isn't given
+    # cal.C_v = cea.C_p + cal.R / 1000 * (pow(cea.dlV_dlTp, 2) / cea.dlV_dlPt)
+    # cal.y = cea.C_p / cal.C_v
 
-    cal.y = cea.C_p / cal.C_v
-
+    # Calls engine_performance.py
     cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.t_a, cal.t_d, cal.c_a, cal.c_d, \
     cal.c_v, cal.t_p, cal.t_t, cal.e_a, cal.e_d, cal.e_t, cal.e_v, cal.m, cal.m_dot, cal.m_dot_f, cal.m_dot_o = \
         engine_performance.engine_performance(input0.P_atm, input0.esp_con, cea.P_c, cea.y, cal.R, cea.T_c, input0.s_f,
                                               input0.s_v, input0.F_o, input0.L_star, cea.MR)
 
+    # Print statement of outputs
     print("Coefficient of Thrust:              ", cal.C_f)
     print("Coefficient of thrust in vacuum:    ", cal.C_f_vac)
     print("Characteristic Velocity:            ", cal.c_star, "m/s")
@@ -118,4 +116,5 @@ if __name__ == "__main__":
     print("Fuel mass flow:                     ", cal.m_dot_f, "kg/s")
     print("Oxidizer mass flow:                 ", cal.m_dot_o, "kg/s")
 
-engine_contour.engine_contour(cal.t_d, input0.alpha, cal.exp_rat)
+    # Calls engine_contour.py
+    engine_contour.engine_contour(cal.t_d, input0.alpha, cal.exp_rat)
