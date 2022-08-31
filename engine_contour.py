@@ -20,7 +20,7 @@ def arc_throat_radius(t_r):
 
 
 def convergent_cone_length(t_r, r, a, exp_rat):  # (4-7)
-    l_n = (t_r * (math.sqrt(exp_rat) - 1) + r * ((1 / math.cos(a)) - 1) )/ (math.tan(a))
+    l_n = 0.85 * (t_r * (math.sqrt(exp_rat) - 1) + r * ((1 / math.cos(a)) - 1) )/ (math.tan(a))
     return l_n
 
 def n_sub_b(t_r):
