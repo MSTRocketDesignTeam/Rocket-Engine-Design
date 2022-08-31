@@ -45,7 +45,7 @@ if __name__ == "__main__":
     # Output Variable Unit Preference #
 
     # Design Parameters #
-    input0.F_o = 2000 * conv.lbf2N  # Desired thrust (lbf)
+    input0.F_o = 500 * conv.lbf2N  # Desired thrust (lbf)
     input0.P_atm = 14.7 * conv.psi2pa  # Ambient pressure (psia)
     input0.L_star = 1.27  # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
     input0.esp_con = 17.1  # Contraction ratio (chamber area/throat area) (experimental)
@@ -70,13 +70,13 @@ if __name__ == "__main__":
 
     # NASA CEA Outputs #
     cea.MR = 5.25  # Oxidizer/Fuel Ratio
-    cea.P_c = 68.947 * conv.bar2pa  # Chamber pressure
-    cea.T_c = 3229.84  # Chamber temperature (K)
-    cea.rho_c = 6.7710  # Chamber gas density (kg/m^3)
-    cea.dlV_dlPt = -1.01536  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
-    cea.dlV_dlTp = 1.3145  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
-    cea.C_p = 3.7762  # Specific heat at constant pressure (kJ/kg*k)
-    cea.y = 1.1480  # Ratio of specific heats
+    cea.P_c = 20.684 * conv.bar2pa  # Chamber pressure
+    cea.T_c = 3125.12  # Chamber temperature (K)
+    cea.rho_c = 2.0810  # Chamber gas density (kg/m^3)
+    cea.dlV_dlPt = -1.01839  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
+    cea.dlV_dlTp = 1.3841  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
+    cea.C_p = 4.2984  # Specific heat at constant pressure (kJ/kg*k)
+    cea.y = 1.1407  # Ratio of specific heats
 
     # Engine Performance Calculations #
     # ---------------------#
@@ -89,9 +89,10 @@ if __name__ == "__main__":
 
     cal.y = cea.C_p / cal.C_v
 
-    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.a_t, cal.d_t, cal.a_c, cal.d_c, \
-    cal.c_v, cal.p_t, cal.t_t, cal.a_e, cal.d_e, cal.e_t = engine_performance.engine_performance(
-        input0.P_atm, input0.esp_con, cea.P_c, cea.y, cal.R, cea.T_c, input0.s_f, input0.s_v, input0.F_o, input0.L_star)
+    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.t_a, cal.d_t, cal.a_c, cal.d_c, \
+    cal.c_v, cal.p_t, cal.t_t, cal.a_e, cal.d_e, cal.e_t, cal.e_v, cal.m, cal.m_dot, cal.m_dot_f, cal.m_dot_o = \
+        engine_performance.engine_performance(input0.P_atm, input0.esp_con, cea.P_c, cea.y, cal.R, cea.T_c, input0.s_f,
+                                              input0.s_v, input0.F_o, input0.L_star, cea.MR)
 
     print("Coefficient of Thrust:              ", cal.C_f)
     print("Coefficient of thrust in vacuum:    ", cal.C_f_vac)
@@ -99,7 +100,7 @@ if __name__ == "__main__":
     print("Expansion ratio:                    ", cal.exp_rat)
     print("Specific impulse at sea level:      ", cal.isp_sl, "s")
     print("Specific impulse in vacuum:         ", cal.isp_vac, "s")
-    print("Throat area:                        ", cal.a_t, "m^2")
+    print("Throat area:                        ", cal.t_a, "m^2")
     print("Throat diameter:                    ", cal.d_t, "m")
     print("Chamber area:                       ", cal.a_c, "m^2")
     print("Chamber diameter:                   ", cal.d_c, "m")
@@ -109,3 +110,8 @@ if __name__ == "__main__":
     print("Exit Area:                          ", cal.a_e, "m^2")
     print("Exit diameter:                      ", cal.d_e, "m")
     print("Exit temperature:                   ", cal.e_t, "K")
+    print("Exit velocity:                      ", cal.e_v, "m/s")
+    print("Exit Mach:                          ", cal.m)
+    print("Total mass flow:                    ", cal.m_dot, "kg/s")
+    print("Fuel mass flow:                     ", cal.m_dot_f, "kg/s")
+    print("Oxidizer mass flow:                 ", cal.m_dot_o, "kg/s")
