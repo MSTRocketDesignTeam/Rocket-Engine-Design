@@ -1,11 +1,6 @@
 import math
 
 
-class Structure:  # structure to make variables easier to categorize
-    def __int__(self):
-        pass
-
-
 def engine_performance(p_atm, esp_con, p_c, y, r, c_t, s_f, s_v, f_o, l_star, mr):
     c_f = thrust_coefficient(p_atm, p_c, y)
     c_f_vac = thrust_coefficient_vac(esp_con, p_atm, p_c, c_f)
@@ -14,21 +9,21 @@ def engine_performance(p_atm, esp_con, p_c, y, r, c_t, s_f, s_v, f_o, l_star, mr
     isp_sl = specific_impulse_sl(c_star, c_f, s_v)
     isp_vac = specific_impulse_vac(c_star, c_f_vac, s_v)
     t_a = throat_area(f_o, c_f, p_c, s_f)
-    d_t = diameter(t_a)
-    a_c = chamber_area(esp_con, t_a)
-    d_c = diameter(a_c)
+    t_d = diameter(t_a)
+    c_a = chamber_area(esp_con, t_a)
+    d_c = diameter(c_a)
     c_v = chamber_vol(l_star, t_a)
-    p_t = throat_pressure(p_c, y)
+    t_p = throat_pressure(p_c, y)
     t_t = throat_temperature(c_t, y)
-    a_e = exit_area(exp_rat, t_a)
-    d_e = diameter(a_e)
+    e_a = exit_area(exp_rat, t_a)
+    e_d = diameter(e_a)
     e_t = exit_temperature(c_t, p_atm, p_c, y)
     e_v = exit_velocity(y, r, c_t, p_atm, p_c)
     m = exit_mach(e_t, c_t, y)
     m_dot = mass_flow(t_a, p_c, y, r, c_t)
     m_dot_f = fuel_mass_flow(m_dot, mr)
     m_dot_o = oxidizer_mass_flow(m_dot, mr)
-    return c_f, c_f_vac, c_star, exp_rat, isp_sl, isp_vac, t_a, d_t, a_c, d_c, c_v, p_t, t_t, a_e, d_e, e_t, e_v, m, \
+    return c_f, c_f_vac, c_star, exp_rat, isp_sl, isp_vac, t_a, t_d, c_a, d_c, c_v, t_p, t_t, e_a, e_d, e_t, e_v, m, \
            m_dot, m_dot_f, m_dot_o
 
 
@@ -77,8 +72,8 @@ def diameter(a):
 
 
 def chamber_area(esp_con, t_a):
-    a_c = esp_con * t_a
-    return a_c
+    c_a = esp_con * t_a
+    return c_a
 
 
 def chamber_vol(l_star, t_a):
@@ -87,8 +82,8 @@ def chamber_vol(l_star, t_a):
 
 
 def throat_pressure(p_c, y):
-    p_t = p_c * (2 / (y + 1)) ** (y / (y - 1))
-    return p_t
+    t_p = p_c * (2 / (y + 1)) ** (y / (y - 1))
+    return t_p
 
 
 def throat_temperature(c_t, y):
@@ -97,8 +92,8 @@ def throat_temperature(c_t, y):
 
 
 def exit_area(exp_rat, t_a):
-    a_e = exp_rat * t_a
-    return a_e
+    e_a = exp_rat * t_a
+    return e_a
 
 
 def exit_temperature(c_t, p_atm, p_c, y):

@@ -1,3 +1,4 @@
+import engine_contour
 import engine_performance
 import math
 import subprocess
@@ -38,6 +39,7 @@ if __name__ == "__main__":
     conv.lbcft2kgm3 = 16.0185
     conv.gpm2cfm = 0.1337
     conv.cfm2m3m = 0.0283168
+    conv.deg2rad = math.pi/180
 
     # Inputs #
     # ---------------------#
@@ -51,7 +53,7 @@ if __name__ == "__main__":
     input0.esp_con = 17.1  # Contraction ratio (chamber area/throat area) (experimental)
 
     # Engine Geometry #
-    input0.alpha = 15  # Conic half angle (deg)
+    input0.alpha = 15 * conv.deg2rad # Conic half angle (deg)
     input0.chamber_shape = False  # True:curved | false:angled
     input0.throat_shape = False  # True:curved | false:angled
     input0.nozzle_shape = False  # True:curved | false:angled
@@ -89,8 +91,8 @@ if __name__ == "__main__":
 
     cal.y = cea.C_p / cal.C_v
 
-    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.t_a, cal.d_t, cal.a_c, cal.d_c, \
-    cal.c_v, cal.p_t, cal.t_t, cal.a_e, cal.d_e, cal.e_t, cal.e_v, cal.m, cal.m_dot, cal.m_dot_f, cal.m_dot_o = \
+    cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.t_a, cal.t_d, cal.c_a, cal.c_d, \
+    cal.c_v, cal.t_p, cal.t_t, cal.e_a, cal.e_d, cal.e_t, cal.e_v, cal.m, cal.m_dot, cal.m_dot_f, cal.m_dot_o = \
         engine_performance.engine_performance(input0.P_atm, input0.esp_con, cea.P_c, cea.y, cal.R, cea.T_c, input0.s_f,
                                               input0.s_v, input0.F_o, input0.L_star, cea.MR)
 
@@ -101,17 +103,19 @@ if __name__ == "__main__":
     print("Specific impulse at sea level:      ", cal.isp_sl, "s")
     print("Specific impulse in vacuum:         ", cal.isp_vac, "s")
     print("Throat area:                        ", cal.t_a, "m^2")
-    print("Throat diameter:                    ", cal.d_t, "m")
-    print("Chamber area:                       ", cal.a_c, "m^2")
-    print("Chamber diameter:                   ", cal.d_c, "m")
+    print("Throat diameter:                    ", cal.t_d, "m")
+    print("Chamber area:                       ", cal.c_a, "m^2")
+    print("Chamber diameter:                   ", cal.c_d, "m")
     print("Chamber volume:                     ", cal.c_v, "m^3")
-    print("Throat Pressure:                    ", cal.p_t, "Pa")
+    print("Throat Pressure:                    ", cal.t_p, "Pa")
     print("Throat temperature:                 ", cal.t_t, "K")
-    print("Exit Area:                          ", cal.a_e, "m^2")
-    print("Exit diameter:                      ", cal.d_e, "m")
+    print("Exit Area:                          ", cal.e_a, "m^2")
+    print("Exit diameter:                      ", cal.e_d, "m")
     print("Exit temperature:                   ", cal.e_t, "K")
     print("Exit velocity:                      ", cal.e_v, "m/s")
     print("Exit Mach:                          ", cal.m)
     print("Total mass flow:                    ", cal.m_dot, "kg/s")
     print("Fuel mass flow:                     ", cal.m_dot_f, "kg/s")
     print("Oxidizer mass flow:                 ", cal.m_dot_o, "kg/s")
+
+engine_contour.engine_contour(cal.t_d, input0.alpha, cal.exp_rat)
