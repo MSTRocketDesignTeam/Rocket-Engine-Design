@@ -5,6 +5,15 @@ import subprocess
 import sys
 
 
+# TO DO
+# 1) Make contour code write to .csv
+# 2) Allow user to pick between bell and conical
+# 3) Model parabola of theta e & n vs expansion ratio. Take input expansion to automatically pick correct values
+# 4) Account for unequal number of orifices, 10f-5o
+# 5) Use .csv files to do weird temp, pressure, and mach stuff along nozzle centerline
+# 6) Allow custom output units
+
+
 def install(matplotlib):
     subprocess.check_call([sys.executable, "-m", "pip", "install", matplotlib])
 
