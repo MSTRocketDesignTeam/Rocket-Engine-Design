@@ -1,11 +1,14 @@
 import math
+import numpy as np
+from matplotlib import pyplot as plt
 
 
 # Modern Design, pg. 76-83
 # http://www.aspirespace.org.uk/downloads/Thrust%20optimised%20parabolic%20nozzle.pdf
+
 def engine_contour(t_d, a, exp_rat):
-    theta_n = 22.7 * math.pi/180
-    theta_e = 13.7 * math.pi/180
+    theta_n = 22.7 * math.pi / 180
+    theta_e = 13.7 * math.pi / 180
     t_r = throat_radius(t_d)
     r = arc_throat_radius(t_r)
     l_n = convergent_cone_length(t_r, r, a, exp_rat)
@@ -17,7 +20,7 @@ def engine_contour(t_d, a, exp_rat):
     n = [n_t, n_a]
     e = [e_t, e_a]
 
-    g1, g2 = m_gradients(theta_n,theta_e)
+    g1, g2 = m_gradients(theta_n, theta_e)
     c1 = c_intercepts(n, g1)
     c2 = c_intercepts(e, g2)
 
@@ -25,11 +28,15 @@ def engine_contour(t_d, a, exp_rat):
     q_a = q_sub_a(g1, g2, c1, c2)
     q = [q_t, q_a]
 
+    bell_px, bell_py = bell_exit(n, e, q)
+
+    plt.title("test")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.plot(bell_px,bell_py)
+    plt.show()
     print(n)
-    print(q)
     print(e)
-    print(t_r, r)
-    print(.382*t_r)
 
 
 def throat_radius(t_d):
@@ -58,7 +65,7 @@ def n_sub_a(t_r, theta_n):
 
 
 def e_sub_a(t_r, exp_rat):
-    e_a = math.sqrt(((math.pi*t_r**2)*exp_rat)/math.pi)
+    e_a = math.sqrt(((math.pi * t_r ** 2) * exp_rat) / math.pi)
 
     return e_a
 
@@ -71,7 +78,7 @@ def m_gradients(theta_n, theta_e):
 
 def c_intercepts(point, gradient):
     c = point[1] - gradient * point[0]
-    #print(point, gradient, c)
+    # print(point, gradient, c)
     return c
 
 
@@ -83,3 +90,23 @@ def q_sub_t(g1, g2, c1, c2):
 def q_sub_a(g1, g2, c1, c2):
     q_a = g1 * (c2 - c1) / (g1 - g2) + c1
     return q_a
+
+
+def bell_exit(n, q, e):
+    t = np.linspace(0, 1, 1000)
+    xarr = np.empty(0, float)
+    yarr = np.empty(0, float)
+    for i in t:
+        x = n[0] * ((1 - i) ** 2) + 2 * i * e[0] * (1 - i) + q[0] * (i ** 2)
+        y = n[1] * ((1 - i) ** 2) + 2 * i * e[1] * (1 - i) + q[1] * (i ** 2)
+        xarr = np.append(xarr, np.array([x]), axis=0)
+        yarr = np.append(yarr, np.array([y]), axis=0)
+    return xarr, yarr
+
+
+def bell_nozzle(theta_n, t_r):
+    t = np.linspace((-math.pi/2), theta_n-(math.pi/2), 1000)
+    xarr = np.empty(0, float)
+    yarr = np.empty(0, float)
+    for i in t:
+        x = 0.382*t_r*math.cos()

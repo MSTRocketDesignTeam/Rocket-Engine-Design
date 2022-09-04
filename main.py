@@ -15,6 +15,11 @@ import sys
 # 5) Use .csv files to do weird temp, pressure, and mach stuff along nozzle centerline
 # 6) Allow custom output units
 # 7) Make GUI
+
+
+# Notes
+# 1) Equlibrium in CEA means infinit reativity of gases, they keep reacting, frozen means that there is no reaction
+# The big point being that eq. is ideal, while frozen is harsh
  
 
 def install(package):
