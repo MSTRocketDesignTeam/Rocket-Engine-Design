@@ -1,5 +1,4 @@
 import importlib.util
-
 import engine_contour
 import engine_performance
 import math
@@ -27,6 +26,8 @@ def install(package):
     if spec is None:
         print("no")
         subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+    else:
+        print('yes')
 
 
 class Structure:  # structure to make variables easier to categorize
@@ -36,6 +37,8 @@ class Structure:  # structure to make variables easier to categorize
 
 if __name__ == "__main__":
     install('matplotlib')
+    install('numpy')
+    install('scipy')
 
 
     const = Structure()

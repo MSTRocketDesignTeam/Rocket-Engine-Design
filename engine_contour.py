@@ -1,6 +1,7 @@
 import math
 import numpy as np
 from matplotlib import pyplot as plt
+from scipy.integrate import dblquad
 
 
 # Modern Design, pg. 76-83
@@ -31,11 +32,14 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
 
     bell_px, bell_py = bell_exit(n, e, q, norm_x)
     bell_npx, bell_npy = bell_nozzle(theta_n, t_r, norm_x)
-    bell_conx, bell_cony = bell_con(theta_n, t_r, norm_x)
+    bell_conx, bell_cony, con_vol = bell_con(t_r, norm_x)
 
+    print(con_vol)
+
+    bell_con_end_p = [bell_conx[-1], bell_cony[-1]]
     g3, g4 = 0, -2 / math.sqrt(2)
     c3 = c_intercepts([-l_star, c_d / 2], g3)
-    c4 = c_intercepts([bell_conx[0], bell_cony[0]], g4)
+    c4 = c_intercepts(bell_con_end_p, g4)
     h_t = x_point(g3, g4, c3, c4)
     h_a = y_point(g3, g4, c3, c4)
     h = [h_t, h_a]
@@ -52,7 +56,7 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
     plt.title("Chamber")
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.scatter(pointx, pointy)
+    plt.plot(pointx * 39.3701, pointy * 39.3701)
     plt.show()
 
 
@@ -111,7 +115,6 @@ def y_point(g1, g2, c1, c2):
 
 def bell_exit(n, q, e, norm_x):
     norm_v = abs(int((n[0] - e[0]) / norm_x))
-    print(norm_v)
     t = np.linspace(0, 1, norm_v)
     xarr = np.empty(0, float)
     yarr = np.empty(0, float)
@@ -126,7 +129,6 @@ def bell_exit(n, q, e, norm_x):
 def bell_nozzle(theta_n, t_r, norm_x):
     norm_v = abs(int(0.382 * t_r * math.cos(theta_n - (math.pi / 2)) / norm_x))
     t = np.linspace((-math.pi / 2), theta_n - (math.pi / 2), norm_v)
-    print(norm_v)
     xarr = np.empty(0, float)
     yarr = np.empty(0, float)
     for i in t:
@@ -137,15 +139,21 @@ def bell_nozzle(theta_n, t_r, norm_x):
     return xarr, yarr
 
 
-def bell_con(theta_n, t_r, norm_x):
+def bell_con(t_r, norm_x):
     norm_v = int(abs(1.5 * t_r * math.cos(-math.pi * 3 / 4)) / norm_x)
-    print(norm_v)
     xarr = np.empty(0, float)
     yarr = np.empty(0, float)
-    t = np.linspace(-math.pi * 3 / 4, -math.pi / 2, norm_v)
+    t = np.linspace(-math.pi / 2, -math.pi * 3 / 4, norm_v)
     for i in t:
         x = 1.5 * t_r * math.cos(i)
         y = 1.5 * t_r * math.sin(i) + 1.5 * t_r + t_r
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
-    return xarr, yarr
+    con_vol = dblquad(lambda r, theta: r * 1.5 * t_r * math.sin(theta) + 1.5 * t_r + t_r, 0, math.pi / 4, lambda r: t_r, lambda r: yarr[-1])
+    con_vol = con_vol[0] * 2 * math.pi
+    # Needs spherical
+    return xarr, yarr, con_vol
+
+
+def bell_con_lin(h, o):
+    pass
