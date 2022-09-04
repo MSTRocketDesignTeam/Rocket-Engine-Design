@@ -140,4 +140,4 @@ if __name__ == "__main__":
     print("Oxidizer mass flow:                 ", cal.m_dot_o, "kg/s")
 
     # Calls engine_contour.py
-    engine_contour.engine_contour(cal.t_d, input0.alpha, cal.exp_rat)
+    engine_contour.engine_contour(cal.t_d, cal.c_d, input0.alpha, cal.exp_rat, input0.L_star)
