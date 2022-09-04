@@ -1,3 +1,5 @@
+import importlib.util
+
 import engine_contour
 import engine_performance
 import math
@@ -5,8 +7,26 @@ import subprocess
 import sys
 
 
-def install(matplotlib):
-    subprocess.check_call([sys.executable, "-m", "pip", "install", matplotlib])
+# TO DO
+# 1) Make contour code write to .csv
+# 2) Allow user to pick between bell and conical
+# 3) Model parabola of theta e & n vs expansion ratio. Take input expansion to automatically pick correct values
+# 4) Account for unequal number of orifices, 10f-5o, maybe deal with deltaP pg. 279
+# 5) Use .csv files to do weird temp, pressure, and mach stuff along nozzle centerline
+# 6) Allow custom output units
+# 7) Make GUI
+
+
+# Notes
+# 1) Equlibrium in CEA means infinit reativity of gases, they keep reacting, frozen means that there is no reaction
+# The big point being that eq. is ideal, while frozen is harsh
+ 
+
+def install(package):
+    spec = importlib.util.find_spec(package)
+    if spec is None:
+        print("no")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
 
 class Structure:  # structure to make variables easier to categorize
@@ -15,6 +35,9 @@ class Structure:  # structure to make variables easier to categorize
 
 
 if __name__ == "__main__":
+    install('matplotlib')
+
+
     const = Structure()
     conv = Structure()
     input0 = Structure()
