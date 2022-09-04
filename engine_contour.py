@@ -37,12 +37,13 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
     print(con_vol)
 
     bell_con_end_p = [bell_conx[-1], bell_cony[-1]]
-    g3, g4 = 0, -2 / math.sqrt(2)
+    g3, g4 = 0, -.95
     c3 = c_intercepts([-l_star, c_d / 2], g3)
     c4 = c_intercepts(bell_con_end_p, g4)
     h_t = x_point(g3, g4, c3, c4)
     h_a = y_point(g3, g4, c3, c4)
     h = [h_t, h_a]
+    bell_con_linx, bell_con_liny = bell_con_lin(h, bell_con_end_p, norm_x, g4, c4)
 
     pointx = np.empty(0, float)
     pointy = np.empty(0, float)
@@ -52,11 +53,13 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
     pointy = np.append(pointy, np.array([bell_py]))
     pointx = np.append(pointx, np.array([bell_conx]))
     pointy = np.append(pointy, np.array([bell_cony]))
+    pointx = np.append(pointx, np.array([bell_con_linx]))
+    pointy = np.append(pointy, np.array([bell_con_liny]))
 
     plt.title("Chamber")
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.plot(pointx * 39.3701, pointy * 39.3701)
+    plt.scatter(pointx, pointy)
     plt.show()
 
 
@@ -149,11 +152,25 @@ def bell_con(t_r, norm_x):
         y = 1.5 * t_r * math.sin(i) + 1.5 * t_r + t_r
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
-    con_vol = dblquad(lambda r, theta: r * 1.5 * t_r * math.sin(theta) + 1.5 * t_r + t_r, 0, math.pi / 4, lambda r: t_r, lambda r: yarr[-1])
+    con_vol = dblquad(lambda r, theta: r * (1.5 * r * math.sin(theta) + 1.5 * r + r), 0, math.pi / 4, lambda r: 0, lambda r: yarr[-1])
     con_vol = con_vol[0] * 2 * math.pi
-    # Needs spherical
     return xarr, yarr, con_vol
 
 
-def bell_con_lin(h, o):
-    pass
+def bell_con_lin(h, o, norm_x, g, c):
+    print(norm_x)
+    print(h[0], o[0])
+    norm_v = abs(int((h[0]+o[0])/norm_x))
+    print(norm_v)
+    xarr = np.empty(0, float)
+    yarr = np.empty(0, float)
+    t = np.linspace(o[0], h[0], norm_v)
+    print(t)
+    for i in t:
+        y = (g * i + c)
+        x = i
+        xarr = np.append(xarr, np.array([x]), axis=0)
+        yarr = np.append(yarr, np.array([y]), axis=0)
+        print(y)
+    return xarr, yarr
+

@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e44e4a1-7571-4524-b2fd-a570a64ef3d7" name="Changes" comment="Rev 11">
+    <list default="true" id="1e44e4a1-7571-4524-b2fd-a570a64ef3d7" name="Changes" comment="Rev 9">
       <change beforePath="$PROJECT_DIR$/.idea/Engine-Contour.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Engine-Contour.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/engine_contour.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine_contour.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,9 +36,6 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectId" id="2DtgW2xOWbqCZMq1nmzWIammAwN" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -62,7 +58,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\PythonWorkSpace\RocketProjects\venv\Scripts\python.exe" />
+      <option name="SDK_HOME" value="C:\Work\Python Projects\Engine-Contour\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -142,14 +138,7 @@
       <option name="project" value="LOCAL" />
       <updated>1662007063681</updated>
     </task>
-    <task id="LOCAL-00009" summary="Rev 11">
-      <created>1662274232941</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1662274232941</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -170,8 +159,7 @@
     <MESSAGE value="Rev 3" />
     <MESSAGE value="Rev 6" />
     <MESSAGE value="Rev 9" />
-    <MESSAGE value="Rev 11" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rev 11" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rev 9" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
