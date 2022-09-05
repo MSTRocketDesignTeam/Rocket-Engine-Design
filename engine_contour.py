@@ -37,7 +37,7 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
     print(con_vol)
 
     bell_con_end_p = [bell_conx[-1], bell_cony[-1]]
-    g3, g4 = 0, -.95
+    g3, g4 = 0, -1
     c3 = c_intercepts([-l_star, c_d / 2], g3)
     c4 = c_intercepts(bell_con_end_p, g4)
     h_t = x_point(g3, g4, c3, c4)
