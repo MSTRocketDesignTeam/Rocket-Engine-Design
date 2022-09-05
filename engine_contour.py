@@ -59,7 +59,7 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
     plt.title("Chamber")
     plt.xlabel("x")
     plt.ylabel("y")
-    plt.scatter(pointx, pointy)
+    plt.scatter(pointx*39.62, pointy*39.62)
     plt.show()
 
 
@@ -158,19 +158,18 @@ def bell_con(t_r, norm_x):
 
 
 def bell_con_lin(h, o, norm_x, g, c):
-    print(norm_x)
-    print(h[0], o[0])
     norm_v = abs(int((h[0]+o[0])/norm_x))
-    print(norm_v)
     xarr = np.empty(0, float)
     yarr = np.empty(0, float)
     t = np.linspace(o[0], h[0], norm_v)
-    print(t)
     for i in t:
         y = (g * i + c)
         x = i
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
-        print(y)
+    print(h[1],o[0], h[0], g, c)
+    con_vol_lin = dblquad(lambda y, x: g*x+c, o[0], h[0], 0, h[1])
+    con_vol_lin = con_vol_lin[0] * 2 * math.pi * -1
+    print(con_vol_lin)
     return xarr, yarr
 
