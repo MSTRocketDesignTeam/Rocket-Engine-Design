@@ -43,7 +43,8 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
     h_t = x_point(g3, g4, c3, c4)
     h_a = y_point(g3, g4, c3, c4)
     h = [h_t, h_a]
-    bell_con_linx, bell_con_liny = bell_con_lin(h, bell_con_end_p, norm_x, g4, c4)
+    bell_con_linx, bell_con_liny, bell_con_li = bell_con_lin(h, bell_con_end_p, norm_x, g4, c4)
+    print((bell_con_li+con_vol)*61020)
 
     pointx = np.empty(0, float)
     pointy = np.empty(0, float)
@@ -152,8 +153,9 @@ def bell_con(t_r, norm_x):
         y = 1.5 * t_r * math.sin(i) + 1.5 * t_r + t_r
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
-    con_vol = dblquad(lambda r, theta: r * (1.5 * r * math.sin(theta) + 1.5 * r + r), 0, math.pi / 4, lambda r: 0, lambda r: yarr[-1])
+    con_vol = dblquad(lambda r, theta: r * (1.5 * r * math.sin(theta) + 1.5 * r + r), -3 * math.pi/4, -math.pi / 2, lambda r: 0, lambda r: yarr[-1])
     con_vol = con_vol[0] * 2 * math.pi
+    print(con_vol)
     return xarr, yarr, con_vol
 
 
@@ -167,9 +169,8 @@ def bell_con_lin(h, o, norm_x, g, c):
         x = i
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
-    print(h[1],o[0], h[0], g, c)
-    con_vol_lin = dblquad(lambda y, x: g*x+c, o[0], h[0], 0, h[1])
-    con_vol_lin = con_vol_lin[0] * 2 * math.pi * -1
-    print(con_vol_lin)
-    return xarr, yarr
-
+    print(o, h, g, c)
+    con_vol_li = dblquad(lambda y, x: g*x+c, h[0], o[0], lambda y: 0, lambda y: c+g*x)
+    con_vol_li = con_vol_li[0] * 2 * math.pi
+    print(con_vol_li)
+    return xarr, yarr, con_vol_li

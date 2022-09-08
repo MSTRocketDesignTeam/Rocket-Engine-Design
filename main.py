@@ -74,7 +74,7 @@ if __name__ == "__main__":
     input0.F_o = 500 * conv.lbf2N  # Desired thrust (lbf)
     input0.P_atm = 14.7 * conv.psi2pa  # Ambient pressure (psia)
     input0.L_star = 1.27  # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
-    input0.esp_con = 9  # Contraction ratio (chamber area/throat area) (experimental)
+    input0.esp_con = 10  # Contraction ratio (chamber area/throat area) (experimental)
 
     # Engine Geometry #
     input0.alpha = 15 * conv.deg2rad # Conic half angle (deg)
