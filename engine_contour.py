@@ -2,7 +2,7 @@ import math
 from math import cos, exp, pi
 import numpy as np
 from matplotlib import pyplot as plt
-from scipy.integrate import dblquad
+from scipy.integrate import dblquad, nquad
 
 
 # Modern Design, pg. 76-83
@@ -51,20 +51,19 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
 
 
 
-    pointx = np.append(pointx, np.array([bell_npx]))
-    pointy = np.append(pointy, np.array([bell_npy]))
-    pointx = np.append(pointx, np.array([bell_px]))
-    pointy = np.append(pointy, np.array([bell_py]))
-    pointx = pointx[::-1]
-    pointy = pointy[::-1]
-    #print(pointx[-1], pointy[-1])
+    #pointx = np.append(pointx, np.array([bell_npx]))
+    #pointy = np.append(pointy, np.array([bell_npy]))
+    #pointx = np.append(pointx, np.array([bell_px]))
+    #pointy = np.append(pointy, np.array([bell_py]))
+    #pointx = pointx[::-1]
+    #pointy = pointy[::-1]
     pointx = np.append(pointx, np.array([bell_conx]))
     pointy = np.append(pointy, np.array([bell_cony]))
-    pointx = np.append(pointx, np.array([bell_con_linx]))
-    pointy = np.append(pointy, np.array([bell_con_liny]))
-    pointx = np.append(pointx, np.array([cha_lin_x]))
-    pointx = pointx + abs(pointx[-1])
-    pointy = np.append(pointy, np.array([cha_lin_y]))
+    #pointx = np.append(pointx, np.array([bell_con_linx]))
+    #pointy = np.append(pointy, np.array([bell_con_liny]))
+    #pointx = np.append(pointx, np.array([cha_lin_x]))
+    #pointx = pointx + abs(pointx[-1])
+    #pointy = np.append(pointy, np.array([cha_lin_y]))
 
     plt.title("Chamber")
     plt.xlabel("x")
@@ -164,6 +163,8 @@ def bell_con(t_r, norm_x):
         yarr = np.append(yarr, np.array([y]), axis=0)
     con_vol = dblquad(lambda r, theta: r * (1.5 * r * math.sin(theta) + 1.5 * r + r), -3 * math.pi/4, -math.pi / 2, lambda r: 0, lambda r: yarr[-1])
     con_vol = con_vol[0] * 2 * math.pi
+    print(con_vol)
+    print(t_r)
     return xarr, yarr, con_vol
 
 
@@ -177,8 +178,8 @@ def bell_con_lin(h, o, norm_x, g, c):
         x = i
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
-    con_vol_li = dblquad(lambda y, x: g * x + c, h[0], o[0], lambda y: 0, lambda y: h[1])
-    con_vol_li = con_vol_li[0] * 2 * math.pi
+    con_vol_li = dblquad(lambda x, y: 2 * math.pi, h[0], o[0], lambda x: 0, lambda x: g * x + c)
+    con_vol_li = con_vol_li[0]
     return xarr, yarr, con_vol_li
 
 
@@ -196,3 +197,5 @@ def chamber_length(l_star, t_d, con_vol, con_vol_li, c_d, h, norm_x):
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
     return xarr, yarr
+
+
