@@ -90,7 +90,7 @@ def chamber_vol(l_star, t_a):
 
 
 def throat_pressure(p_c, y):
-    # RPE (3-20), calculates throat area, (Pa)
+    # RPE (3-20), calculates throat pressure, (Pa)
     t_p = p_c * (2 / (y + 1)) ** (y / (y - 1))
     return t_p
 
