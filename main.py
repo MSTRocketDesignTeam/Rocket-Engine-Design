@@ -1,9 +1,11 @@
 import importlib.util
 import engine_contour
 import engine_performance
-import math
+from math import pi
 import subprocess
 import sys
+import numpy as np
+import mach_relationships
 
 
 # TO DO
@@ -36,9 +38,9 @@ class Structure:  # structure to make variables easier to categorize
 
 
 if __name__ == "__main__":
-    install('matplotlib')
-    install('numpy')
-    install('scipy')
+    #install('matplotlib')
+    #install('numpy')
+    #install('scipy')
 
 
     const = Structure()
@@ -63,7 +65,7 @@ if __name__ == "__main__":
     conv.lbcft2kgm3 = 16.0185
     conv.gpm2cfm = 0.1337
     conv.cfm2m3m = 0.0283168
-    conv.deg2rad = math.pi/180
+    conv.deg2rad = pi/180
 
     # Inputs #
     # ---------------------#
@@ -73,8 +75,9 @@ if __name__ == "__main__":
     # Design Parameters #
     input0.F_o = 500 * conv.lbf2N  # Desired thrust (lbf)
     input0.P_atm = 14.7 * conv.psi2pa  # Ambient pressure (psia)
-    input0.L_star = 1.27  # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
-    input0.esp_con = 10  # Contraction ratio (chamber area/throat area) (experimental)
+    input0.L_star =1.3   # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
+    input0.esp_con = 7  # Contraction ratio (chamber area/throat area) (experimental)
+
 
     # Engine Geometry #
     input0.alpha = 15 * conv.deg2rad # Conic half angle (deg)
@@ -110,8 +113,8 @@ if __name__ == "__main__":
     cal.R = cea.P_c / (cea.T_c * cea.rho_c)  # Calculates gas constant
 
     # Way to calculate specific heat at const. volume. Useful if gamma isn't given
-    # cal.C_v = cea.C_p + cal.R / 1000 * (pow(cea.dlV_dlTp, 2) / cea.dlV_dlPt)
-    # cal.y = cea.C_p / cal.C_v
+    cal.C_v = cea.C_p + cal.R / 1000 * (pow(cea.dlV_dlTp, 2) / cea.dlV_dlPt)
+    cal.y = cea.C_p / cal.C_v
 
     # Calls engine_performance.py
     cal.C_f, cal.C_f_vac, cal.c_star, cal.exp_rat, cal.isp_sl, cal.isp_vac, cal.t_a, cal.t_d, cal.c_a, cal.c_d, \
@@ -143,4 +146,12 @@ if __name__ == "__main__":
     print("Oxidizer mass flow:                 ", cal.m_dot_o, "kg/s")
 
     # Calls engine_contour.py
-    engine_contour.engine_contour(cal.t_d, cal.c_d, input0.alpha, cal.exp_rat, input0.L_star)
+    pointx, pointy, norm_x = engine_contour.engine_contour(cal.t_d, cal.c_d, input0.alpha, cal.exp_rat, input0.L_star)
+
+    zarr = np.zeros(len(pointx))
+    arr = [pointx, pointy, zarr]
+    arr = np.transpose(arr)
+    f = open("contour_points.dat", "x")
+    np.savetxt("contour_points.dat", arr)
+    f.close()
+    #  mach_relationships.mach_relationships(pointx, pointy, cal.t_t, cal.t_p, cea.y)

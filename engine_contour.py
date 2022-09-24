@@ -1,16 +1,17 @@
 import math
-from math import cos, exp, pi
+from math import pi, sqrt
 import numpy as np
+import matplotlib
 from matplotlib import pyplot as plt
-from scipy.integrate import dblquad, nquad
+from scipy.integrate import dblquad
 
 
 # Modern Design, pg. 76-83
 # http://www.aspirespace.org.uk/downloads/Thrust%20optimised%20parabolic%20nozzle.pdf
 
 def engine_contour(t_d, c_d, a, exp_rat, l_star):
-    theta_n = 22.7 * math.pi / 180
-    theta_e = 13.7 * math.pi / 180
+    theta_n = 22.7 * pi / 180
+    theta_e = 13.7 * pi / 180
     t_r = throat_radius(t_d)
     r = arc_throat_radius(t_r)
     l_n = convergent_cone_length(t_r, r, a, exp_rat)
@@ -21,7 +22,7 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
 
     n = [n_t, n_a]
     e = [e_t, e_a]
-    norm_x = l_n / 1000
+    norm_x = l_n / 100
 
     g1, g2 = m_gradients(theta_n, theta_e)
     c1 = c_intercepts(n, g1)
@@ -62,12 +63,16 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
     pointx = np.append(pointx, np.array([cha_lin_x]))
     pointx = pointx + abs(pointx[-1])
     pointy = np.append(pointy, np.array([cha_lin_y]))
+    pointyf = pointy * -1
 
-    plt.title("Chamber")
-    plt.xlabel("x")
-    plt.ylabel("y")
-    plt.plot(pointx * 39.62, pointy * 39.62)
+    plt.title("Engine Contour")
+    plt.xlabel("Chamber Length (in)")
+    plt.ylabel("Chamber Diameter (in)")
+    plt.plot(pointx * 39.37, pointy * 39.37, 'r')
+    plt.plot(pointx * 39.37, pointyf * 39.37, 'b')
+
     plt.show()
+    return pointx, pointy, norm_x
 
 
 def throat_radius(t_d):
@@ -81,7 +86,7 @@ def arc_throat_radius(t_r):
 
 
 def convergent_cone_length(t_r, r, a, exp_rat):  # (4-7)
-    l_n = 0.80 * (t_r * (math.sqrt(exp_rat) - 1) + r * ((1 / math.cos(a)) - 1)) / (math.tan(a))
+    l_n = 0.80 * (t_r * (sqrt(exp_rat) - 1) + r * ((1 / math.cos(a)) - 1)) / (math.tan(a))
     return l_n
 
 
@@ -96,7 +101,7 @@ def n_sub_a(t_r, theta_n):
 
 
 def e_sub_a(t_r, exp_rat):
-    e_a = math.sqrt(((math.pi * t_r ** 2) * exp_rat) / math.pi)
+    e_a = sqrt(((pi * t_r ** 2) * exp_rat) / pi)
 
     return e_a
 
@@ -137,8 +142,8 @@ def bell_exit(n, q, e, norm_x):
 
 
 def bell_nozzle(theta_n, t_r, norm_x):
-    norm_v = abs(int(0.382 * t_r * math.cos(theta_n - (math.pi / 2)) / norm_x))
-    t = np.linspace((-math.pi / 2), theta_n - (math.pi / 2), norm_v)
+    norm_v = abs(int(0.382 * t_r * math.cos(theta_n - (pi / 2)) / norm_x))
+    t = np.linspace((-pi / 2), theta_n - (pi / 2), norm_v)
     xarr = np.empty(0, float)
     yarr = np.empty(0, float)
     for i in t:
@@ -150,12 +155,12 @@ def bell_nozzle(theta_n, t_r, norm_x):
 
 
 def bell_con(t_r, norm_x):
-    norm_v = int(abs(1.5 * t_r * math.cos(-math.pi * 3 / 4)) / norm_x)
+    norm_v = int(abs(1.5 * t_r * math.cos(-pi * 3 / 4)) / norm_x)
     xarr = np.empty(0, float)
     yarr = np.empty(0, float)
     harr = np.empty(0, float)
     garr = np.empty(0, float)
-    t = np.linspace(-math.pi / 2, -math.pi * 3 / 4, norm_v)
+    t = np.linspace(-pi / 2, -pi * 3 / 4, norm_v)
     for i in t:
         x = 1.5 * t_r * math.cos(i)
         y = 1.5 * t_r * math.sin(i) + 1.5 * t_r + t_r
@@ -172,8 +177,8 @@ def bell_con(t_r, norm_x):
     garr = np.delete(garr, -1)
     k = np.arange(0, norm_v - 1, 1)
     for i in k:
-        con_vol += (harr[i] * garr[i] * 2 * math.pi)
-    # con_vol = dblquad(lambda r, theta: r * (1.5 * r * math.sin(theta) + 1.5 * r + r), -3 * math.pi/4, -math.pi / 2, lambda r: 0, lambda r: yarr[-1])
+        con_vol += (harr[i] * garr[i] * 2 * pi)
+    # con_vol = dblquad(lambda r, theta: r * (1.5 * r * math.sin(theta) + 1.5 * r + r), -3 * pi/4, -pi / 2, lambda r: 0, lambda r: yarr[-1])
     return xarr, yarr, con_vol
 
 
@@ -187,15 +192,15 @@ def bell_con_lin(h, o, norm_x, g, c):
         x = i
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
-    con_vol_li = dblquad(lambda x, y: 2 * math.pi, h[0], o[0], lambda x: 0, lambda x: g * x + c)
+    con_vol_li = dblquad(lambda x, y: 2 * pi, h[0], o[0], lambda x: 0, lambda x: g * x + c)
     con_vol_li = con_vol_li[0]
     return xarr, yarr, con_vol_li
 
 
 def chamber_length(l_star, t_d, con_vol, con_vol_li, c_d, h, norm_x):
-    t_a = (math.pi * t_d ** 2) / 4
+    t_a = (pi * t_d ** 2) / 4
     vol_t = t_a * l_star
-    c_len = -(vol_t - (con_vol_li + con_vol) / 39.37) / ((math.pi * c_d ** 2) / 4)
+    c_len = -(vol_t - (con_vol_li + con_vol) / 39.37) / ((pi * c_d ** 2) / 4)
     xarr = np.empty(0, float)
     yarr = np.empty(0, float)
     norm_v = abs(int((c_len + h[0]) / norm_x))

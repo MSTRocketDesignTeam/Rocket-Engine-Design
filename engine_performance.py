@@ -1,4 +1,4 @@
-import math
+from math import pi, sqrt
 
  # Calls various functions to calculate basic engine performance parameters and generosity
 def engine_performance(p_atm, esp_con, p_c, y, r, c_t, s_f, s_v, f_o, l_star, mr):
@@ -29,7 +29,7 @@ def engine_performance(p_atm, esp_con, p_c, y, r, c_t, s_f, s_v, f_o, l_star, mr
 
 def thrust_coefficient(p_atm, p_c, y):
     # RPE (3-30), calculates thrust coefficient
-    c_f = math.sqrt(
+    c_f = sqrt(
         (2 * (y ** 2) / (y - 1)) * (2 / (y + 1)) ** ((y + 1) / (y - 1)) * (1 - (p_atm / p_c) ** ((y - 1) / y)))
     return c_f
 
@@ -42,13 +42,13 @@ def thrust_coefficient_vac(esp_con, p_atm, p_c, c_f):
 
 def characteristic_velocity(y, r, c_t):
     # RPE (3-32), calculates characteristic velocity, (m/s)
-    c_star = math.sqrt(y * r * c_t) / (y * math.sqrt((2 / (y + 1)) ** ((y + 1) / (y - 1))))
+    c_star = sqrt(y * r * c_t) / (y * sqrt((2 / (y + 1)) ** ((y + 1) / (y - 1))))
     return c_star
 
 
 def expansion_ratio(y, p_atm, p_c):
     # RPE (3-25), calculates the expansion ratio of a nozzle
-    exp_rat = 1 / ((((y + 1) / 2) ** (1 / (y - 1))) * ((p_atm / p_c) ** (1 / y)) * math.sqrt(
+    exp_rat = 1 / ((((y + 1) / 2) ** (1 / (y - 1))) * ((p_atm / p_c) ** (1 / y)) * sqrt(
         ((y + 1) / (y - 1)) * (1 - (p_atm / p_c) ** ((y - 1) / y))))
     return exp_rat
 
@@ -67,7 +67,7 @@ def specific_impulse_vac(c_star, c_f_vac, s_v):
 
 def diameter(a):
     # Basic geometry, calculates diameter from area, (m^2)
-    d = 2 * math.sqrt(a / math.pi)
+    d = 2 * sqrt(a / pi)
     return d
 
 
@@ -115,19 +115,19 @@ def exit_temperature(c_t, p_atm, p_c, y):
 
 def exit_velocity(y, r, c_t, p_atm, p_c):
     # RPE (3-16), calculates exit velocity, (m/s)
-    e_v = math.sqrt(((y * 2 * r * c_t) / (y - 1)) * (1 - (p_atm / p_c) ** ((y - 1) / y)))
+    e_v = sqrt(((y * 2 * r * c_t) / (y - 1)) * (1 - (p_atm / p_c) ** ((y - 1) / y)))
     return e_v
 
 
 def exit_mach(e_t, c_t, y):
     # RPE (3-12) modified, calculates exit mach number, (M)
-    m = math.sqrt((2 / (y - 1)) * ((c_t / e_t) - 1))
+    m = sqrt((2 / (y - 1)) * ((c_t / e_t) - 1))
     return m
 
 
 def mass_flow(t_a, p_c, y, r, c_t):
     # RPE (3-24), calculates total mass flow of propellants, (kg/s)
-    m_dot = t_a * p_c * y * ((math.sqrt((2 / (y + 1)) ** ((y + 1) / (y - 1)))) / (math.sqrt(y * r * c_t)))
+    m_dot = t_a * p_c * y * ((sqrt((2 / (y + 1)) ** ((y + 1) / (y - 1)))) / (sqrt(y * r * c_t)))
     return m_dot
 
 
