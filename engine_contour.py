@@ -22,7 +22,7 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
 
     n = [n_t, n_a]
     e = [e_t, e_a]
-    norm_x = l_n / 100
+    norm_x = l_n / 200
 
     g1, g2 = m_gradients(theta_n, theta_e)
     c1 = c_intercepts(n, g1)
@@ -72,6 +72,7 @@ def engine_contour(t_d, c_d, a, exp_rat, l_star):
     plt.plot(pointx * 39.37, pointyf * 39.37, 'b')
 
     plt.show()
+
     return pointx, pointy, norm_x
 
 
@@ -138,6 +139,14 @@ def bell_exit(n, q, e, norm_x):
         y = n[1] * ((1 - i) ** 2) + 2 * i * e[1] * (1 - i) + q[1] * (i ** 2)
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
+
+    zarr = np.zeros(norm_v)
+    arr = [xarr * 39.36, yarr * 39.36, zarr]
+    arr = np.transpose(arr)
+    f = open("contour_exit.dat", "w")
+    np.savetxt("contour_exit.dat", arr)
+    f.close()
+
     return xarr, yarr
 
 
@@ -151,6 +160,14 @@ def bell_nozzle(theta_n, t_r, norm_x):
         y = 0.382 * t_r * math.sin(i) + .382 * t_r + t_r
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
+
+    zarr = np.zeros(norm_v)
+    arr = [xarr * 39.36, yarr * 39.36, zarr]
+    arr = np.transpose(arr)
+    f = open("contour_nexit.dat", "w")
+    np.savetxt("contour_nexit.dat", arr)
+    f.close()
+
     return xarr, yarr
 
 
@@ -166,6 +183,14 @@ def bell_con(t_r, norm_x):
         y = 1.5 * t_r * math.sin(i) + 1.5 * t_r + t_r
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
+
+    zarr = np.zeros(norm_v)
+    arr = [xarr * 39.36, yarr * 39.36, zarr]
+    arr = np.transpose(arr)
+    f = open("contour_con.dat", "w")
+    np.savetxt("contour_con.dat", arr)
+    f.close()
+
     con_vol = 0
     j = np.arange(0, norm_v, 1)
     for i in j:
@@ -178,7 +203,7 @@ def bell_con(t_r, norm_x):
     k = np.arange(0, norm_v - 1, 1)
     for i in k:
         con_vol += (harr[i] * garr[i] * 2 * pi)
-    # con_vol = dblquad(lambda r, theta: r * (1.5 * r * math.sin(theta) + 1.5 * r + r), -3 * pi/4, -pi / 2, lambda r: 0, lambda r: yarr[-1])
+
     return xarr, yarr, con_vol
 
 
@@ -194,6 +219,14 @@ def bell_con_lin(h, o, norm_x, g, c):
         yarr = np.append(yarr, np.array([y]), axis=0)
     con_vol_li = dblquad(lambda x, y: 2 * pi, h[0], o[0], lambda x: 0, lambda x: g * x + c)
     con_vol_li = con_vol_li[0]
+
+    zarr = np.zeros(norm_v)
+    arr = [xarr * 39.36, yarr * 39.36, zarr]
+    arr = np.transpose(arr)
+    f = open("contour_con_lin.dat", "w")
+    np.savetxt("contour_con_lin.dat", arr)
+    f.close()
+
     return xarr, yarr, con_vol_li
 
 
@@ -210,4 +243,12 @@ def chamber_length(l_star, t_d, con_vol, con_vol_li, c_d, h, norm_x):
         x = i
         xarr = np.append(xarr, np.array([x]), axis=0)
         yarr = np.append(yarr, np.array([y]), axis=0)
+
+    zarr = np.zeros(norm_v)
+    arr = [xarr * 39.36, yarr * 39.36, zarr]
+    arr = np.transpose(arr)
+    f = open("contour_chamber.dat", "w")
+    np.savetxt("contour_chamber.dat", arr)
+    f.close()
+
     return xarr, yarr

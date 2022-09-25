@@ -75,8 +75,8 @@ if __name__ == "__main__":
     # Design Parameters #
     input0.F_o = 500 * conv.lbf2N  # Desired thrust (lbf)
     input0.P_atm = 14.7 * conv.psi2pa  # Ambient pressure (psia)
-    input0.L_star =1.3   # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
-    input0.esp_con = 7  # Contraction ratio (chamber area/throat area) (experimental)
+    input0.L_star = 1.3   # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
+    input0.esp_con = 8  # Contraction ratio (chamber area/throat area) (experimental)
 
 
     # Engine Geometry #
@@ -148,10 +148,5 @@ if __name__ == "__main__":
     # Calls engine_contour.py
     pointx, pointy, norm_x = engine_contour.engine_contour(cal.t_d, cal.c_d, input0.alpha, cal.exp_rat, input0.L_star)
 
-    zarr = np.zeros(len(pointx))
-    arr = [pointx, pointy, zarr]
-    arr = np.transpose(arr)
-    f = open("contour_points.dat", "x")
-    np.savetxt("contour_points.dat", arr)
-    f.close()
+
     #  mach_relationships.mach_relationships(pointx, pointy, cal.t_t, cal.t_p, cea.y)
