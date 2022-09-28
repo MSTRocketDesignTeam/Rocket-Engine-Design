@@ -14,9 +14,7 @@ def injector_orifice(m_dot_f, m_dot_o, f_rho, o_rho, f_temp, o_temp ,delta_p, in
 def two_phase_orifice(m_dot, cd, dp, rho, p):  # Imcompressable flow
     dp = p*dp
     pr = p/7270000
-    print(pr)
     z = -16.438*(pr**6)+44.625*(pr**5)-44.889*(pr**4)+20.313*(pr**3)-3.9608*(pr**2)-0.3575*pr+.9999
-    print(z)
     area = ((m_dot)/(cd*z*math.sqrt(2*dp*rho)))*(39.67**2)/12
     diameter = math.sqrt(area*4/math.pi)
     print(diameter)
