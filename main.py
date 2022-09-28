@@ -5,6 +5,8 @@ from math import pi
 import subprocess
 import sys
 import numpy as np
+
+import injector_orifice
 import mach_relationships
 
 
@@ -88,10 +90,21 @@ if __name__ == "__main__":
     engine.chamber_wall_thickness = .25 * conv.in2m  # (in)
 
     # Injector #
-    engine.injector_del_P = 0.20  # Pressure drop across injector   (high for low chamber pressures)
+    engine.injector_del_P = .2  # Pressure drop across injector   (high for low chamber pressures) (%)
     engine.injector_oxid_N = 20  # Number of oxidizer injector orifices
     engine.injector_fuel_N = 20  # Number of fuel injector orifices
     engine.injector_C_d = .8  # Discharge coefficient (~)  Helps determine performance ahead of time
+
+    # Propellant Properties #
+
+    # Nitrous Oxide#
+    input0.o_rho = 1230.458  # (kg/m^3)
+    input0.o_temp = 255  # (K)
+
+    # Ethanol
+    input0.f_rho = 789  # (kg/m^3)
+    input0.f_temp = 300  # (K)
+
 
     # Correction Factors #
     input0.s_f = 0.96  # Thrust correction factor (~)
@@ -148,5 +161,6 @@ if __name__ == "__main__":
     # Calls engine_contour.py
     pointx, pointy, norm_x = engine_contour.engine_contour(cal.t_d, cal.c_d, input0.alpha, cal.exp_rat, input0.L_star)
 
-
+    injector_orifice.injector_orifice(cal.m_dot_f, cal.m_dot_o, input0.f_rho, input0.o_rho, input0.f_temp, input0.o_temp ,engine.injector_del_P, engine.injector_C_d, engine.injector_fuel_N, engine.injector_oxid_N, cea.P_c)
+    #m_dot_f, m_dot_o, f_rho, o_rho, delta_p, injector_cd, o_number, f_number
     #  mach_relationships.mach_relationships(pointx, pointy, cal.t_t, cal.t_p, cea.y)
