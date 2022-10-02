@@ -23,7 +23,7 @@ import mach_relationships
 # Notes
 # 1) Equlibrium in CEA means infinit reativity of gases, they keep reacting, frozen means that there is no reaction
 # The big point being that eq. is ideal, while frozen is harsh
- 
+
 
 def install(package):
     spec = importlib.util.find_spec(package)
@@ -40,10 +40,9 @@ class Structure:  # structure to make variables easier to categorize
 
 
 if __name__ == "__main__":
-    #install('matplotlib')
-    #install('numpy')
-    #install('scipy')
-
+    # install('matplotlib')
+    # install('numpy')
+    # install('scipy')
 
     const = Structure()
     conv = Structure()
@@ -67,22 +66,23 @@ if __name__ == "__main__":
     conv.lbcft2kgm3 = 16.0185
     conv.gpm2cfm = 0.1337
     conv.cfm2m3m = 0.0283168
-    conv.deg2rad = pi/180
+    conv.deg2rad = pi / 180
 
     # Inputs #
     # ---------------------#
 
     # Output Variable Unit Preference #
 
-    # Design Parameters #
-    input0.F_o = 2000 * conv.lbf2N  # Desired thrust (lbf)
-    input0.P_atm = 14.7 * conv.psi2pa  # Ambient pressure (psia)
-    input0.L_star = 1.3   # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
-    input0.esp_con = 8  # Contraction ratio (chamber area/throat area) (experimental)
 
+
+    # Design Parameters #
+    input0.F_o = 500 * conv.lbf2N  # Desired thrust (lbf)
+    input0.P_atm = 14.7 * conv.psi2pa  # Ambient pressure (psia)
+    input0.L_star = 1.4  # Characteristic chamber length (m) (chamber volume/throat area) (experimental)
+    input0.esp_con = 11  # Contraction ratio (chamber area/throat area) (experimental)
 
     # Engine Geometry #
-    input0.alpha = 15 * conv.deg2rad # Conic half angle (deg)
+    input0.alpha = 15 * conv.deg2rad  # Conic half angle (deg)
     input0.chamber_shape = False  # True:curved | false:angled
     input0.throat_shape = False  # True:curved | false:angled
     input0.nozzle_shape = False  # True:curved | false:angled
@@ -90,10 +90,14 @@ if __name__ == "__main__":
     engine.chamber_wall_thickness = .25 * conv.in2m  # (in)
 
     # Injector #
-    engine.injector_del_P = .2  # Pressure drop across injector   (high for low chamber pressures) (%)
-    engine.injector_oxid_N = 20  # Number of oxidizer injector orifices
-    engine.injector_fuel_N = 20  # Number of fuel injector orifices
-    engine.injector_C_d = .8  # Discharge coefficient (~)  Helps determine performance ahead of time
+    input0.inj_del_P = .2  # Pressure drop across injector   (high for low chamber pressures) (%)
+    input0.inj_rows = 2  # Number of injector roles
+    input0.inj_I_sec = 2  # Number of injector element sections
+    input0.inj_mult = 3  # Injector element multiplier
+    input0.inj_o_num = 1  # Number of ox orifices in section
+    input0.inj_f_num = 2  # Number of fuel orifices in section
+    input0.inj_class = 1  # Type of injector - 1: Like | 2: Unlike | 3: Vortex
+    engine.inj_C_d = .8  # Discharge coefficient (~)  Helps determine performance ahead of time
 
     # Propellant Properties #
 
@@ -105,20 +109,19 @@ if __name__ == "__main__":
     input0.f_rho = 789  # (kg/m^3)
     input0.f_temp = 300  # (K)
 
-
     # Correction Factors #
     input0.s_f = 0.96  # Thrust correction factor (~)
     input0.s_v = 0.92  # Velocity correction factor (~)
 
     # NASA CEA Outputs #
-    cea.MR = 5.25  # Oxidizer/Fuel Ratio
+    cea.MR = 4  # Oxidizer/Fuel Ratio
     cea.P_c = 20.684 * conv.bar2pa  # Chamber pressure
-    cea.T_c = 3125.12  # Chamber temperature (K)
-    cea.rho_c = 2.0810  # Chamber gas density (kg/m^3)
-    cea.dlV_dlPt = -1.01839  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
-    cea.dlV_dlTp = 1.3841  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
-    cea.C_p = 4.2984  # Specific heat at constant pressure (kJ/kg*k)
-    cea.y = 1.1407  # Ratio of specific heats
+    cea.T_c = 3037.52  # Chamber temperature (K)
+    cea.rho_c = 2.0190  # Chamber gas density (kg/m^3)
+    cea.dlV_dlPt = -1.00922  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
+    cea.dlV_dlTp = 1.1964  # Thermodynamic expression (Heat Capacity Ratio Wiki) (Real Gas Relations)
+    cea.C_p = 3.2137  # Specific heat at constant pressure (kJ/kg*k)
+    cea.y = 1.1641  # Ratio of specific heats
 
     # Engine Performance Calculations #
     # ---------------------#
@@ -161,6 +164,7 @@ if __name__ == "__main__":
     # Calls engine_contour.py
     pointx, pointy, norm_x = engine_contour.engine_contour(cal.t_d, cal.c_d, input0.alpha, cal.exp_rat, input0.L_star)
 
-    injector_orifice.injector_orifice(cal.m_dot_f, cal.m_dot_o, input0.f_rho, input0.o_rho, input0.f_temp, input0.o_temp ,engine.injector_del_P, engine.injector_C_d, engine.injector_fuel_N, engine.injector_oxid_N, cea.P_c)
-    #m_dot_f, m_dot_o, f_rho, o_rho, delta_p, injector_cd, o_number, f_number
-    #  mach_relationships.mach_relationships(pointx, pointy, cal.t_t, cal.t_p, cea.y)
+    injector_orifice.injector_orifice(cal.m_dot_f, cal.m_dot_o, input0.f_rho, input0.o_rho, input0.f_temp,
+                                      input0.o_temp, cea.P_c, cal.c_d, input0.inj_del_P, input0.inj_rows,
+                                      input0.inj_I_sec, input0.inj_mult, input0.inj_o_num, input0.inj_f_num,
+                                      engine.inj_C_d, input0.inj_class)

@@ -1,7 +1,6 @@
 import math
 from math import pi, sqrt
 import numpy as np
-import matplotlib
 from matplotlib import pyplot as plt
 from scipy.integrate import dblquad
 
