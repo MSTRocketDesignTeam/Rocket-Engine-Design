@@ -1,7 +1,9 @@
 # Rocket-Engine-Design
 
-The purpose of this program is to aid the S&T Rocket Design team in the prelimnary design of liquid rocket engines and propellanttanks with inpseration comming from Rocket Propulsion Analysis and HalfCatSim
+The purpose of this program is to aid the S&T Rocket Design team in the prelimnary design of liquid rocket engines and propellanttanks with inpseration comming from Rocket Propulsion Analysis and HalfCatSim. 
 
 Non-Technical Goals
+* 
 Technical Goals
-* Proccess NASA CEA files in bulk
+* Proccess tabulated NASA CEA fles in bulk
+* * 3
